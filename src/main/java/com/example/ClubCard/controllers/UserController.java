@@ -56,7 +56,7 @@ public class UserController {
     }
 
     @PostMapping("/registration")
-    public String registration(@ModelAttribute("Registration")RegistrationForm registrationForm, Model model) {
+    public String registration(@ModelAttribute("registrationForm")RegistrationForm registrationForm, Model model) {
         User user = User.builder().username(registrationForm.getUsername()).role(Role.USER).password(passwordEncoderConfig.getPasswordEncoder().encode(registrationForm.getPassword()))
                 .name(registrationForm.getName()).surname(registrationForm.getSurname())
                 .fatherName(registrationForm.getFatherName()).email(registrationForm.getEmail())
@@ -64,8 +64,8 @@ public class UserController {
         try {
             userService.saveNew(user);
         } catch (ValidationException e) {
-            model.addAttribute("error", e.toString());
-            return "/registration";
+            model.addAttribute("error", e.getMessage());
+            return "registration";
         }
         return "redirect:/login";
     }
@@ -94,7 +94,7 @@ public class UserController {
             userService.updatePassword(user, changePasswordForm);
             return "redirect:/login";
         } catch (ValidationException e) {
-            model.addAttribute("error", e.toString());
+            model.addAttribute("error", e.getMessage());
             return "/change_password";
         }
 

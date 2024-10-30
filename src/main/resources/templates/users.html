@@ -27,5 +27,9 @@
 
 </table>
 <a th:href="@{users/new}">Добавить пользователя</a>
+
+<form th:action="@{/user_data}" th:method="GET">
+    <button type="submit" value="Профиль"></button>
+</form>
 </body>
 </html>

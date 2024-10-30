@@ -56,12 +56,17 @@ public class UserController {
     }
 
     @PostMapping("/registration")
-    public String registration(@ModelAttribute("Registration")RegistrationForm registrationForm) {
+    public String registration(@ModelAttribute("Registration")RegistrationForm registrationForm, Model model) {
         User user = User.builder().username(registrationForm.getUsername()).role(Role.USER).password(passwordEncoderConfig.getPasswordEncoder().encode(registrationForm.getPassword()))
                 .name(registrationForm.getName()).surname(registrationForm.getSurname())
                 .fatherName(registrationForm.getFatherName()).email(registrationForm.getEmail())
                 .phone(registrationForm.getPhone()).birthdate(registrationForm.getBirthDate()).build();
-        userService.saveNew(user);
+        try {
+            userService.saveNew(user);
+        } catch (ValidationException e) {
+            model.addAttribute("error", e.toString());
+            return "/registration";
+        }
         return "redirect:/login";
     }
 

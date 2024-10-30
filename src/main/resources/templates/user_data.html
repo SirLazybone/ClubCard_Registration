@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Новый пользователь</title>
+</head>
+<body>
+
+
+<p>Логин: </p>
+<p th:text="${username}"><br><br>
+<p>Имя: </p>
+<p th:text="${name}">
+<p>Фамилия: </p>
+<p th:text="${surname}"><br><br>
+<p>Отчество: </p>
+<p th:text="${fatherName}"><br><br>
+<p>Почта: </p>
+<p th:text="${email}"><br><br>
+<p>Телефон: </p>
+<p th:text="${phone}"><br><br>
+<p>Дата роджения: </p>
+<p th:text="${birthdate}"><br><br>
+<p>Права доступа: </p>
+<p th:text="${role}"><br><br>
+<form th:if="${role == 'ADMIN'}">
+    <a th:href="@{/users}">Показать всех пользователей</a>
+</form>
+<br>
+<form th:action="@{/change_password}" th:method="GET">
+    <input type="submit" value="Сменя пароля">
+</form>
+</body>
+</html>
